@@ -154,7 +154,11 @@ nltk.download('vader_lexicon')
 analyzer = SentimentIntensityAnalyzer()
 
 ret_df = analyse_sentimemnt_vader(df)
-print(ret_df.head())
+
+# Save the new Data Frame
+saved_df = df[['user_name','user_location','user_followers','user_friends','user_favourites','user_verified','source']]
+print(saved_df)
+saved_df.to_csv('./Resources/tweets_with_sentiment.csv')
 
 plt = plot(ret_df)
 # hvplot.show(plt)
