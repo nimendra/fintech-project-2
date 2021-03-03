@@ -62,11 +62,9 @@ def process_twitter_dataframe(df):
     return df
 
 #process the stock dataframe, add a returns column, shift the data and return a dataframe containing the return
-def process_stock_dataframe(df, shift):
+def process_stock_dataframe(df):
     df = df[['close']].pct_change().dropna()
     df.rename(columns={'close': 'return'}, inplace = True)
-    df = df.shift(shift)
-    df.dropna(inplace=True)
     return df
 
 #change the returns to -1 or 1
