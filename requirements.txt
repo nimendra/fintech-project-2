@@ -1,1 +1,2 @@
-pip install PyJWT==1.7.1
+PyJWT==1.7.1
+selenium
