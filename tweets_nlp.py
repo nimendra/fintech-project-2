@@ -156,7 +156,7 @@ analyzer = SentimentIntensityAnalyzer()
 ret_df = analyse_sentimemnt_vader(df)
 
 # Save the new Data Frame
-saved_df = df[['user_name','user_location','user_followers','user_friends','user_favourites','user_verified','source']]
+saved_df = ret_df[['user_name','user_location','user_followers','user_friends','user_favourites','user_verified','source', 'compound','positive', 'negative','neutral']]
 print(saved_df)
 saved_df.to_csv('./Resources/tweets_with_sentiment.csv')
 
