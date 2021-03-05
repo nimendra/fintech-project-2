@@ -9,6 +9,7 @@ from nltk.util import ngrams
 import re
 import pandas as pd
 
+
 def generate_wordcloud(df, n):
     my_dpi = 1
     nltk.download('wordnet')
@@ -28,6 +29,7 @@ def generate_wordcloud(df, n):
     wc.to_file(f"new_tweets_wordCloud_{n}grams.png")
     return wc
 
+
 consumer_key = 'SCOPBRKeG4nRCEa7XkMoqQ'
 consumer_secret = 'RYInMkLiNyg0iKC3g89Y0f8g8kbNFSsNjZXNYBYILQ'
 access_token = '107275871-PtAa9t7OJX82IEbGjdOzaFMgeCWQyU8haNPhN4mD'
@@ -35,7 +37,7 @@ access_token_secret = 'Q691rTrztjXeYAP5FEA5kZWRhuFRtH8sq6msPgUeD1TzI'
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth,wait_on_rate_limit=True)
+api = tweepy.API(auth, wait_on_rate_limit=True)
 
 # csvFile = open('./Resources/new_tweets.csv', 'w')
 # csvWriter = csv.writer(csvFile)
@@ -51,5 +53,9 @@ api = tweepy.API(auth,wait_on_rate_limit=True)
 #     all_tweets.append(tweet.text)
 #     csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
 
-new_tweets_df = pd.read_csv('./Resources/new_tweets.csv')
-generate_wordcloud(new_tweets_df, 2)
+
+def load_vaccine_csv():
+    df = pd.read_csv('./Resources/covidvaccine.csv')
+    df = df[['user_name', 'user_location', 'user_followers', 'user_friends',
+             'user_favourites', 'user_verified', 'date', 'text', 'source']]
+    return df
