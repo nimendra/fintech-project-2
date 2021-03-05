@@ -119,7 +119,7 @@ def generate_wordcloud(df, n):
 
     output = ['_'.join(i) for i in mgrams]
     all_text = ' '.join(output)
-    wc = WordCloud().generate(all_text)
+    wc = WordCloud(width=1080, height=720).generate(all_text)
     wc.to_file(f"wordCloud_{n}grams.png")
     return wc
 
