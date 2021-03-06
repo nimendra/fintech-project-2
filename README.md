@@ -57,6 +57,7 @@ pip install yfinance
 ### Jupyter Notebooks:
 
 [Model_Train](project_model_train.ipynb): Use pyfile above to train and save models
+``` Notice: Please run this one first to train and save models for following parts ```
 
 [Model_Test](project_model_evaluation.ipynb): Test and Evaluate Trained Models
 
