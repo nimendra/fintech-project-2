@@ -1,4 +1,4 @@
-import tweepy
+import tweepy as tw 
 import csv
 import nltk
 from nltk.tokenize import word_tokenize
@@ -27,29 +27,37 @@ def generate_wordcloud(df, n):
     wc = WordCloud(width=1080, height=720).generate(all_text)
     wc.to_file(f"new_tweets_wordCloud_{n}grams.png")
     return wc
+new_tweets_df = pd.read_csv('./Resources/new_tweets.csv')
+generate_wordcloud(new_tweets_df, 2)
+
 
 consumer_key = 'SCOPBRKeG4nRCEa7XkMoqQ'
 consumer_secret = 'RYInMkLiNyg0iKC3g89Y0f8g8kbNFSsNjZXNYBYILQ'
 access_token = '107275871-PtAa9t7OJX82IEbGjdOzaFMgeCWQyU8haNPhN4mD'
 access_token_secret = 'Q691rTrztjXeYAP5FEA5kZWRhuFRtH8sq6msPgUeD1TzI'
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth = tw.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth,wait_on_rate_limit=True)
+api = tw.API(auth,wait_on_rate_limit=True)
 
-# csvFile = open('./Resources/new_tweets.csv', 'w')
-# csvWriter = csv.writer(csvFile)
-# # Write the header row
-# csvWriter.writerow(['created_at', 'text'])
 
-# all_tweets = []
 
-# for tweet in tweepy.Cursor(api.search,q="#covidvaccine",count=1000,
-#                            lang="en",
-#                            since="2019-11-01").items(1000):
-#     print (tweet.created_at, tweet.text)
-#     all_tweets.append(tweet.text)
-#     csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
 
-new_tweets_df = pd.read_csv('./Resources/new_tweets.csv')
-generate_wordcloud(new_tweets_df, 2)
+def get_tweets(key_words, start, end, number):
+    tweets = tw.Cursor(api.search,
+                       q=key_words,
+                       lang="en",
+                       since=start,
+                       until=end).items(number)
+
+    users_locs = [[tweet.user.name, 
+                   tweet.user.location, 
+                   tweet.user.followers_count, tweet.user.friends_count, 
+                   tweet.user.favourites_count, tweet.user.verified, tweet.created_at, tweet.text, tweet.source] for tweet in tweets]
+    
+    tweet_df = pd.DataFrame(data=users_locs, 
+                    columns=['user_name', 'user_location', 'user_followers', 'user_friends', 'user_favourites', 'user_verified', 'date', 'text', 'source'])
+    
+    return tweet_df
+    
+    
