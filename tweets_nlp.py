@@ -119,7 +119,7 @@ def generate_wordcloud(df, n):
 
     output = ['_'.join(i) for i in mgrams]
     all_text = ' '.join(output)
-    wc = WordCloud(width=1080, height=720).generate(all_text)
+    wc = WordCloud().generate(all_text)
     wc.to_file(f"wordCloud_{n}grams.png")
     return wc
 
@@ -156,7 +156,7 @@ analyzer = SentimentIntensityAnalyzer()
 ret_df = analyse_sentimemnt_vader(df)
 
 # Save the new Data Frame
-saved_df = ret_df[['user_name','user_location','user_followers','user_friends','user_favourites','user_verified','source', 'compound','positive', 'negative','neutral']]
+saved_df = df[['user_name','user_location','user_followers','user_friends','user_favourites','user_verified','source']]
 print(saved_df)
 saved_df.to_csv('./Resources/tweets_with_sentiment.csv')
 
